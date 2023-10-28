@@ -1,0 +1,76 @@
+TASK 5 - LIBRARY MANAGEMENT TOOL
+
+Develop a system to manage books, borrowers, and transactions in a library.
+Book Database: Store book information (title, author, ISBN) in a Database. Book Search: Allow
+users to search for books based on title, author, or ISBN. Book Checkout: Enable librarians to
+check out books to borrowers. Book Return: Record book returns and update availability
+status. Fine Calculation: Implement a fine calculation system for overdue Books. User Interface:
+Design a user-friendly interface for easy interaction.
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+class Book {
+public:
+    std::string title;
+    std::string author;
+    std::string ISBN;
+    bool isAvailable;
+
+    Book(const std::string& t, const std::string& a, const std::string& isbn) 
+        : title(t), author(a), ISBN(isbn), isAvailable(true) {}
+
+    void checkout() {
+        isAvailable = false;
+    }
+
+    void returnBook() {
+        isAvailable = true;
+    }
+};
+
+class Borrower {
+public:
+    std::string name;
+    int fine;
+
+    Borrower(const std::string& n) : name(n), fine(0) {}
+
+    void updateFine(int amount) {
+        fine += amount;
+    }
+};
+
+int main() {
+  
+    std::vector<Book> library;
+    std::vector<Borrower> borrowers;
+
+  
+    library.push_back(Book("Book 1", "Author 1", "ISBN1"));
+    library.push_back(Book("Book 2", "Author 2", "ISBN2"));
+
+    borrowers.push_back(Borrower("Borrower 1"));
+    borrowers.push_back(Borrower("Borrower 2"));
+
+    library[0].checkout();
+    library[1].checkout();
+
+    library[0].returnBook();
+    
+
+    borrowers[0].updateFine(5);
+
+    for (const Book& book : library) {
+        std::cout << "Book: " << book.title << " by " << book.author << " (ISBN: " << book.ISBN << ")\n";
+        std::cout << "Status: " << (book.isAvailable ? "Available" : "Checked Out") << "\n\n";
+    }
+
+    for (const Borrower& borrower : borrowers) {
+        std::cout << "Borrower: " << borrower.name << "\n";
+        std::cout << "Fine: $" << borrower.fine << "\n\n";
+    }
+
+    return 0;
+}
